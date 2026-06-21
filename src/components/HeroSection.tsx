@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 
-const SCROLL_PER_SLIDE_VH = 100;
+const SCROLL_PER_SLIDE_VH = 60;
 const VIDEOS = [
   'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260515_113235_88e0d62e-8103-40c1-948e-f0a4f886ffd1.mp4',
   'https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260515_114315_ee3663e6-bd79-41b4-9e5b-0fae62827eb9.mp4',
@@ -70,8 +70,7 @@ export function HeroSection() {
       const diff = targetProgress.current - currentProgress.current;
       
       if (Math.abs(diff) > 0.0001) {
-        // Snappier visual inertia
-        currentProgress.current += diff * 0.15;
+        currentProgress.current += diff * 0.3;
         setDisplayedProgress(currentProgress.current);
       } else if (currentProgress.current !== targetProgress.current) {
         // Clean snap to the exact target when very close, ensuring full visual convergence
@@ -89,8 +88,7 @@ export function HeroSection() {
     };
   }, [windowHeight]);
 
-  // Easing calculations for smooth mask reveal
-  const getEasing = (p: number) => {
+  const easeInOutCubic = (p: number) => {
     return p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
   };
 
@@ -106,18 +104,16 @@ export function HeroSection() {
           const localProgress = displayedProgress - index + 1;
 
           if (index === 0) {
-            clipPath = 'none'; // Base layer
+            clipPath = 'none';
           } else {
-            // Clip progressing logic
             if (localProgress <= 0) {
-              clipPath = 'ellipse(0% 0% at 50% 50%)'; // Hidden
+              clipPath = 'inset(100% 0% 0% 0%)';
             } else if (localProgress >= 1) {
-              clipPath = 'ellipse(200% 200% at 50% 50%)'; // Fully Expanded
+              clipPath = 'inset(0% 0% 0% 0%)';
             } else {
-              const easedProgress = getEasing(localProgress);
-              const xRadius = 5 + easedProgress * 150;
-              const yRadius = 8 + easedProgress * 150;
-              clipPath = `ellipse(${xRadius}% ${yRadius}% at 50% 50%)`;
+              const eased = easeInOutCubic(localProgress);
+              const top = (1 - eased) * 100;
+              clipPath = `inset(${top}% 0% 0% 0%)`;
             }
           }
 
