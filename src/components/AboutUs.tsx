@@ -35,17 +35,18 @@ export function AboutUs() {
     );
 
     gsap.fromTo(words,
-      { opacity: 0.1, filter: 'blur(3px)' },
+      { opacity: 0, filter: 'blur(4px)', y: 20 },
       {
         opacity: 1,
         filter: 'blur(0px)',
-        stagger: 0.04,
-        ease: 'none',
+        y: 0,
+        stagger: 0.03,
+        duration: 0.6,
+        ease: 'power2.out',
         scrollTrigger: {
           trigger: textRef.current,
-          start: 'top bottom-=20%',
-          end: 'bottom bottom-=10%',
-          scrub: true,
+          start: 'top 90%',
+          once: true,
         }
       }
     );
