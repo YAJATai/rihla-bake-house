@@ -57,22 +57,20 @@ export function ProductGallery() {
   useGSAP(() => {
     const items = gsap.utils.toArray('.gallery-item');
     
-    gsap.fromTo(items, 
-      { opacity: 0, y: 80, filter: 'blur(5px)' },
-      {
-        opacity: 1, 
-        y: 0, 
-        filter: 'blur(0px)',
-        duration: 0.8,
-        ease: 'power3.out',
-        stagger: 0.1,
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: 'top 80%',
-          once: true
-        }
+    gsap.set(items, { opacity: 0, y: 80, filter: 'blur(5px)' });
+    gsap.to(items, {
+      opacity: 1,
+      y: 0,
+      filter: 'blur(0px)',
+      duration: 0.8,
+      ease: 'power3.out',
+      stagger: 0.1,
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: 'top 80%',
+        once: true
       }
-    );
+    });
   }, { scope: containerRef });
 
   return (
@@ -112,7 +110,7 @@ function GalleryCard({ item, extraClasses = '' }: { key?: string; item: any; ext
   const [isLoaded, setIsLoaded] = React.useState(false);
 
   return (
-    <div className={`p-1 gallery-item opacity-0 flex flex-col group ${extraClasses}`}>
+    <div className={`p-1 gallery-item flex flex-col group ${extraClasses}`}>
       <div 
         className="overflow-hidden rounded-sm relative bg-neutral-100 shadow-sm" 
         style={{ aspectRatio: item.wide ? '8/3' : '3/4' }}

@@ -34,22 +34,20 @@ export function AboutUs() {
       }
     );
 
-    gsap.fromTo(words,
-      { opacity: 0, filter: 'blur(4px)', y: 20 },
-      {
-        opacity: 1,
-        filter: 'blur(0px)',
-        y: 0,
-        stagger: 0.03,
-        duration: 0.6,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: textRef.current,
-          start: 'top 90%',
-          once: true,
-        }
+    gsap.set(words, { opacity: 0, filter: 'blur(4px)', y: 20 });
+    gsap.to(words, {
+      opacity: 1,
+      filter: 'blur(0px)',
+      y: 0,
+      stagger: 0.02,
+      duration: 0.5,
+      ease: 'power2.out',
+      scrollTrigger: {
+        trigger: textRef.current,
+        start: 'top 85%',
+        once: true,
       }
-    );
+    });
   }, { scope: containerRef });
 
   return (

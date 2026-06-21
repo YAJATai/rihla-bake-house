@@ -42,38 +42,32 @@ export function Partnering() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
-    // Title split text animation
-    gsap.fromTo('.partner-title-char',
-      { opacity: 0, y: 30 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.6,
-        stagger: 0.03,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: 'top 85%',
-        }
+    gsap.set('.partner-title-char', { opacity: 0, y: 30 });
+    gsap.to('.partner-title-char', {
+      opacity: 1,
+      y: 0,
+      duration: 0.6,
+      stagger: 0.03,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: 'top 85%',
       }
-    );
+    });
 
-    // Cards animation
-    gsap.fromTo('.partner-card',
-      { opacity: 0, y: 50 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.7,
-        stagger: 0.15,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: '.partner-cardsGrid',
-          start: 'top 85%',
-          once: true
-        }
+    gsap.set('.partner-card', { opacity: 0, y: 50 });
+    gsap.to('.partner-card', {
+      opacity: 1,
+      y: 0,
+      duration: 0.7,
+      stagger: 0.15,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: '.partner-cardsGrid',
+        start: 'top 85%',
+        once: true
       }
-    );
+    });
   }, { scope: containerRef });
 
   return (
@@ -103,7 +97,7 @@ export function Partnering() {
           <SplitText
             text="Guestbook & Love"
             className="font-luxurious text-[32px] md:text-[44px] leading-[1.3] text-white"
-            charClass="partner-title-char opacity-0 translate-y-[30px]"
+            charClass="partner-title-char"
           />
         </h2>
 
@@ -111,7 +105,7 @@ export function Partnering() {
           {REVIEWS.map((review, i) => (
             <div 
               key={i} 
-              className="partner-card opacity-0 bg-neutral-900/60 backdrop-blur-md border border-neutral-800/80 p-6 md:p-8 flex flex-col items-start gap-4 rounded-md transition-all duration-300 hover:border-gold/30 hover:bg-neutral-900/80"
+              className="partner-card bg-neutral-900/60 backdrop-blur-md border border-neutral-800/80 p-6 md:p-8 flex flex-col items-start gap-4 rounded-md transition-all duration-300 hover:border-gold/30 hover:bg-neutral-900/80"
             >
               <div className="flex items-center justify-between w-full">
                 <div className="flex flex-col">
